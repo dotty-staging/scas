@@ -8,6 +8,9 @@ object scas extends ScalaModule with PublishModule {
     ivy"org.scala-lang:scala-library:2.13.3"
   )
   object application extends ScalaModule {
+    val dottyVersion = Option(sys.props("dottyVersion"))
+    object jvm extends Cross[JvmPPrintModule]((List(scalaVersion) ++ dottyVersion): _*)
+
     def scalaVersion = "3.0.0-RC1-bin-20201202-67d9790-NIGHTLY"
     def scalacOptions = Seq("-language:implicitConversions")
     def moduleDeps = Seq(scas)
